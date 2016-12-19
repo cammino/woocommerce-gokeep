@@ -30,6 +30,13 @@ class WC_Gokeep extends WC_Integration {
                 'type'        => 'text',
                 'placeholder' => 'Seu código aqui',
                 'default'     => get_option( 'woocommerce_gokeep_id' ) // Backwards compat
+            ),
+            'gokeep_additional_script' => array(
+                'title'       => __( 'Additional Script' ),
+                'description' => __( 'Area para códigos javascript adicionais' ),
+                'type'        => 'textarea',
+                'placeholder' => 'Seu código aqui',
+                'default'     => get_option( 'woocommerce_gokeep_additional_script' ) // Backwards compat
             )
         );
 
@@ -81,7 +88,8 @@ class WC_Gokeep extends WC_Integration {
      */
     public function init_options() {
         $options = array(
-            'gokeep_id'
+            'gokeep_id',
+            'gokeep_additional_script'
         );
 
         $constructor = array();

@@ -53,6 +53,8 @@ class WC_Gokeep_JS {
             // pageview
             gokeep(\"send\", \"pageview\");"
         );
+
+        wc_enqueue_js( self::get( 'gokeep_additional_script' ) );
     }
 
     /**
@@ -64,12 +66,12 @@ class WC_Gokeep_JS {
             jQuery('{$selector}').on('click', function(){
                 gokeep('send', 'cartadd', [{
                     'id': '" . esc_js( $product->id ) . "',
-                    'name': '" . esc_js( $product->get_title() ) . "',
+                    'name': '" . str_replace( '&amp;', 'E', esc_js( $product->get_title() ) ) . "',
                     'sku': '" . esc_js( $product->get_sku() ) . "',
                     'price': " . esc_js( $product->get_price() ) . ",
                     'url': '" . esc_js( $product->post->guid ) . "',
                     'image': '" . esc_js( self::get_image($product->id) ) . "',
-                    'qty': $( 'input.qty' ).val() ? $( 'input.qty' ).val() : '1',
+                    'qty': jQuery( 'input.qty' ).val() ? jQuery( 'input.qty' ).val() : '1',
                     'category': " . self::product_get_category_line( $product ) . "
                 }]);
                 gokeep('send', 'pageview');
@@ -82,7 +84,7 @@ class WC_Gokeep_JS {
      */
     function remove_from_cart() {
         wc_enqueue_js( "
-            jQuery( '.remove' ).on( 'click', function() {
+            jQuery( '.remove, .product-remove a' ).on( 'click', function() {
                 gokeep( 'send', 'cartremove', {
                     'id': $(this).data('product_id'),
                     'qty': $(this).parent().parent().find( '.qty' ).val() ? $(this).parent().parent().find( '.qty' ).val() : '1'
@@ -99,7 +101,7 @@ class WC_Gokeep_JS {
         wc_enqueue_js("
             productImpressions.push({
                 'id': '" . esc_js( $product->id ) . "',
-                'name': '" . esc_js( $product->get_title() ) . "',
+                'name': '" . str_replace( '&amp;', 'E', esc_js( $product->get_title() ) ) . "',
                 'sku': '" . esc_js( $product->get_sku() ) . "',
                 'price': " . esc_js( $product->get_price() ) . ",
                 'url': '" . esc_js( get_permalink( $product->id ) ) . "',
@@ -135,8 +137,9 @@ class WC_Gokeep_JS {
     public static function product_detail( $product ) {
         wc_enqueue_js( 
             "gokeep( 'send', 'productview', {
-                'id': '" . esc_js( $product->get_sku() ? $product->get_sku() : $product->id ) . "',
-                'name': '" . esc_js( $product->get_title() ) . "',
+                'id': '" . esc_js( $product->id ) . "',
+                'sku': '" . esc_js( $product->get_sku() ) . "',
+                'name': '" . str_replace( '&amp;', 'E', esc_js( $product->get_title() ) ) . "',
                 'url': '" . esc_js( get_permalink( $product->id ) ) . "',
                 'price': '" . esc_js( $product->get_price() ) . "',
                 'image': '" . esc_js( self::get_image( $product->id ) ) . "',
@@ -155,7 +158,7 @@ class WC_Gokeep_JS {
             $product     = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
             $items .= "{
                 'id': '" . esc_js( $product->id ) . "',
-                'name': '" . esc_js( $product->get_title() ) . "',
+                'name': '" . str_replace( '&amp;', 'E', esc_js( $product->get_title() ) ) . "',
                 'category': " . self::product_get_category_line( $product ) . "
                 'price': '" . esc_js( $product->get_price() ) . "',
                 'image': '" . esc_js( self::get_image( $product->id ) ) . "',
@@ -179,7 +182,7 @@ class WC_Gokeep_JS {
     {
         wc_enqueue_js( " 
             // form checkout
-            jQuery('.woocommerce-checkout').on('submit', function() {
+            jQuery('.woocommerce-checkout, form.checkout').on('submit', function() {
                 var email = jQuery('#billing_email').val(),
                 name = jQuery('#billing_first_name').val(),
                 lastname = jQuery('#billing_last_name').val(),
@@ -219,7 +222,7 @@ class WC_Gokeep_JS {
             var_dump($_product['qty']); 
             $items .= "{
                 'id': '" . esc_js( $product->id ) . "',
-                'name': '" . esc_js( $product->get_title() ) . "',
+                'name': '" . str_replace( '&amp;', 'E', esc_js( $product->get_title() ) ) . "',
                 'category': " . self::product_get_category_line( $product ) . "
                 'price': '" . esc_js( $product->get_price() ) . "',
                 'image': '" . esc_js( self::get_image( $product->id ) ) . "',
@@ -274,7 +277,7 @@ class WC_Gokeep_JS {
                     $out[] = $category->name;
                 }
             }
-            $code = "'" . esc_js( join( "/", $out ) ) . "',";
+            $code = "'" . str_replace("&amp;", "E", esc_js( join( "/", $out ) )) . "',";
         }
 
         return $code;
