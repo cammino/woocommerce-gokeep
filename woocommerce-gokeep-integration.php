@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! class_exists( 'WC_Gokeep_Integration' ) ) :
 
 /**
- * WooCommerce Google Analytics Integration main class.
+ * WooCommerce Gokeep Integration main class.
  */
 class WC_Gokeep_Integration {
 
@@ -72,10 +72,10 @@ class WC_Gokeep_Integration {
    * @return void
    */
   public function load_plugin_textdomain() {
-    $locale = apply_filters( 'plugin_locale', get_locale(), 'woocommerce-google-analytics-integration' );
+    $locale = apply_filters( 'plugin_locale', get_locale(), 'woocommerce-gokeep-integration' );
 
-    load_textdomain( 'woocommerce-google-analytics-integration', trailingslashit( WP_LANG_DIR ) . 'woocommerce-google-analytics-integration/woocommerce-google-analytics-integration-' . $locale . '.mo' );
-    load_plugin_textdomain( 'woocommerce-google-analytics-integration', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+    load_textdomain( 'woocommerce-gokeep-integration', trailingslashit( WP_LANG_DIR ) . 'woocommerce-gokeep-integration/woocommerce-gokeep-integration-' . $locale . '.mo' );
+    load_plugin_textdomain( 'woocommerce-gokeep-integration', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
   }
 
   /**
@@ -84,7 +84,7 @@ class WC_Gokeep_Integration {
    * @return string
    */
   public function woocommerce_missing_notice() {
-    echo '<div class="error"><p>' . sprintf( __( 'WooCommerce Google Analytics depends on the last version of %s to work!', 'woocommerce-google-analytics-integration' ), '<a href="http://www.woothemes.com/woocommerce/" target="_blank">' . __( 'WooCommerce', 'woocommerce-google-analytics-integration' ) . '</a>' ) . '</p></div>';
+    echo '<div class="error"><p>' . sprintf( __( 'WooCommerce Gokeep depends on the last version of %s to work!', 'woocommerce-gokeep-integration' ), '<a href="http://www.woothemes.com/woocommerce/" target="_blank">' . __( 'WooCommerce', 'woocommerce-gokeep-integration' ) . '</a>' ) . '</p></div>';
   }
 
   /**
@@ -92,7 +92,7 @@ class WC_Gokeep_Integration {
    *
    * @param  array $integrations WooCommerce integrations.
    *
-   * @return array               Google Analytics integration.
+   * @return array               Gokeep integration.
    */
   public function add_integration( $integrations ) {
     $integrations[] = 'WC_Gokeep';
