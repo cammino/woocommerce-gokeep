@@ -61,14 +61,14 @@ class WC_Gokeep_JS {
      * Builds the add_to_cart event
      */
     public static function add_to_cart( $product, $selector ) {
-        
+
         wc_enqueue_js("
             jQuery('{$selector}').on('click', function(){
                 gokeep('send', 'cartadd', [{
                     'id': '" . esc_js( $product->id ) . "',
                     'name': '" . str_replace( '&amp;', 'E', esc_js( $product->get_title() ) ) . "',
                     'sku': '" . esc_js( $product->get_sku() ) . "',
-                    'price': " . esc_js( $product->get_price() ) . ",
+                    'price': " . esc_js( floatval($product->get_price()) ) . ",
                     'url': '" . esc_js( $product->post->guid ) . "',
                     'image': '" . esc_js( self::get_image($product->id) ) . "',
                     'qty': jQuery( 'input.qty' ).val() ? jQuery( 'input.qty' ).val() : '1',
@@ -103,7 +103,7 @@ class WC_Gokeep_JS {
                 'id': '" . esc_js( $product->id ) . "',
                 'name': '" . str_replace( '&amp;', 'E', esc_js( $product->get_title() ) ) . "',
                 'sku': '" . esc_js( $product->get_sku() ) . "',
-                'price': " . esc_js( $product->get_price() ) . ",
+                'price': " . esc_js( floatval($product->get_price()) ) . ",
                 'url': '" . esc_js( get_permalink( $product->id ) ) . "',
                 'image': '" . esc_js( self::get_image($product->id) ) . "',
                 'category': " . self::product_get_category_line( $product ) . "
@@ -141,7 +141,7 @@ class WC_Gokeep_JS {
                 'sku': '" . esc_js( $product->get_sku() ) . "',
                 'name': '" . str_replace( '&amp;', 'E', esc_js( $product->get_title() ) ) . "',
                 'url': '" . esc_js( get_permalink( $product->id ) ) . "',
-                'price': '" . esc_js( $product->get_price() ) . "',
+                'price': '" . esc_js( floatval($product->get_price()) ) . "',
                 'image': '" . esc_js( self::get_image( $product->id ) ) . "',
                 'category': " . self::product_get_category_line( $product ) . "
             });"
@@ -160,7 +160,7 @@ class WC_Gokeep_JS {
                 'id': '" . esc_js( $product->id ) . "',
                 'name': '" . str_replace( '&amp;', 'E', esc_js( $product->get_title() ) ) . "',
                 'category': " . self::product_get_category_line( $product ) . "
-                'price': '" . esc_js( $product->get_price() ) . "',
+                'price': '" . esc_js( floatval($product->get_price()) ) . "',
                 'image': '" . esc_js( self::get_image( $product->id ) ) . "',
                 'qty': '" . esc_js( $cart_item['quantity'] ) . "',
                 'sku': '" . esc_js( $product->get_sku() ) . "',
@@ -224,7 +224,7 @@ class WC_Gokeep_JS {
                 'id': '" . esc_js( $product->id ) . "',
                 'name': '" . str_replace( '&amp;', 'E', esc_js( $product->get_title() ) ) . "',
                 'category': " . self::product_get_category_line( $product ) . "
-                'price': '" . esc_js( $product->get_price() ) . "',
+                'price': '" . esc_js( floatval($product->get_price()) ) . "',
                 'image': '" . esc_js( self::get_image( $product->id ) ) . "',
                 'qty': '" . esc_js( $_product['qty'] ) . "',
                 'sku': '" . esc_js( $product->get_sku() ) . "',
