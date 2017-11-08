@@ -51,7 +51,6 @@ class WC_Gokeep extends WC_Integration {
         // admin options
         add_action( 'woocommerce_update_options_integration_gokeep_tracking', array( $this, 'process_admin_options') );
         add_action( 'woocommerce_update_options_integration_gokeep_tracking', array( $this, 'show_options_info') );
-        add_action( 'admin_enqueue_scripts', array( $this, 'load_admin_assets') );
 
 
         // Tracking code
