@@ -252,7 +252,7 @@ class WC_Gokeep_JS {
         $code = "{
             'id': '" . esc_js( $product->id ) . "',
             'total': " . esc_js( $order->get_total() ) . ",
-            'shipping': " . esc_js( count($shipping) ? $shipping['cost'] : 0.00 ) . ",
+            'shipping': " . esc_js( count($shipping) ? floatval($shipping['cost']) : 0.00 ) . ",
             'tax': " . esc_js( 0.00 ) . ",
             'coupon': '" . esc_js( $coupons_list ) . "',
             'items': [" . $items . "]
